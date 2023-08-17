@@ -1,0 +1,63 @@
+@startuml
+abstract Organization {
+business_name
+fantasy_name
+country
+tax_id
+local_empathia_id ~ CVU
+}
+
+class NonProfit {
+ngo_type
+tax_exemption
+}
+
+class ForProfit {
+society_type
+category
+}
+
+class Card {
+number
+name
+cvv
+expiration_date
+}
+
+Organization ..>"*" Card : prepaid_cards
+
+
+Organization <|-- NonProfit
+Organization <|-- ForProfit
+
+Organization ..>"*" User : admins
+
+class User {
+country
+tax_id
+email
+}
+
+Organization ..>"*" Transaction : txs
+
+abstract Transaction {
+amount
+currency
+in_or_out
+}
+
+Transaction <|-- FIAT
+Transaction <|-- OnChain
+
+class FIAT {
+payment_method
+commission
+third_party
+}
+
+class OnChain {
+hash
+address
+}
+
+@enduml
